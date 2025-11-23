@@ -2599,6 +2599,84 @@ def serve_index():
         return "index.html not found! Make sure it is in the same folder as app.py.", 404
 
 # =============
+# 🆕 PWA FILES SERVING
+# =============
+@app.route("/manifest.json")
+def serve_manifest():
+    """Serves the PWA manifest file"""
+    try:
+        return send_file("manifest.json")
+    except Exception as e:
+        print(f"Error serving manifest.json: {e}")
+        return "manifest.json not found!", 404
+
+@app.route("/sw.js")
+def serve_sw():
+    """Serves the service worker file"""
+    try:
+        return send_file("sw.js")
+    except Exception as e:
+        print(f"Error serving sw.js: {e}")
+        return "sw.js not found!", 404
+
+@app.route("/icon.svg")
+def serve_icon():
+    """Serves the app icon"""
+    try:
+        return send_file("icon.svg")
+    except Exception as e:
+        print(f"Error serving icon.svg: {e}")
+        return "icon.svg not found!", 404
+
+# =============
+# 🆕 PWA ICON ROUTES (Direct Server Root)
+# =============
+@app.route("/icon-192.png")
+def serve_icon_192():
+    """Serves 192x192 PNG icon"""
+    try:
+        return send_file("icon-192.png", mimetype="image/png")
+    except Exception as e:
+        print(f"Error serving icon-192.png: {e}")
+        return "icon-192.png not found!", 404
+
+@app.route("/icon-512.png")
+def serve_icon_512():
+    """Serves 512x512 PNG icon"""
+    try:
+        return send_file("icon-512.png", mimetype="image/png")
+    except Exception as e:
+        print(f"Error serving icon-512.png: {e}")
+        return "icon-512.png not found!", 404
+
+@app.route("/icon-1024.png")
+def serve_icon_1024():
+    """Serves 1024x1024 PNG icon"""
+    try:
+        return send_file("icon-1024.png", mimetype="image/png")
+    except Exception as e:
+        print(f"Error serving icon-1024.png: {e}")
+        return "icon-1024.png not found!", 404
+
+# Screenshot routes (optional but needed for PWA)
+@app.route("/screen1.png")
+def serve_screen1():
+    try:
+        return send_file("screen1.png", mimetype="image/png")
+    except Exception as e:
+        print(f"Error serving screen1.png: {e}")
+        # Return placeholder or 404
+        return "Screenshot not available", 404
+
+@app.route("/screen2.png")
+def serve_screen2():
+    try:
+        return send_file("screen2.png", mimetype="image/png")
+    except Exception as e:
+        print(f"Error serving screen2.png: {e}")
+        return "Screenshot not available", 404
+
+# =============
 # BOOTSTRAP
 # =============
 if __name__ == "__main__":
