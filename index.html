@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FlashAutomationPlus+ | Ultimate X Automation</title>
     
+    <!-- === PWA SETTINGS === -->
+    <meta name="theme-color" content="#00aaff">
+    <meta name="description" content="Dominate X (Twitter) with smart automation. Schedule tweets, manage multiple accounts, and grow your audience effortlessly.">
+    
+    <!-- iOS Mobile Web App Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FlashAuto+">
+    
+    <!-- Icons & Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="apple-touch-icon" href="icon.svg">
+
     <!-- LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -48,6 +62,8 @@
             color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden; /* Prevent horizontal scroll */
+            /* PWA: Prevent pull-to-refresh on mobile */
+            overscroll-behavior-y: none;
         }
 
         /* === BACKGROUND VIDEO & PARTICLES === */
@@ -85,6 +101,9 @@
             justify-content: center;
             gap: 8px;
             font-size: 1rem;
+            /* PWA: Prevent text selection on buttons */
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn:hover {
             transform: translateY(-2px);
@@ -924,6 +943,15 @@
     </div>
 
     <script>
+        // --- SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered!', reg.scope))
+                    .catch(err => console.log('SW failed:', err));
+            });
+        }
+
         // --- GLOBAL STATE ---
         const API_BASE = ''; 
         let ACCESS_KEY = localStorage.getItem('access_key');
